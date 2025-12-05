@@ -13,4 +13,8 @@ npx prettier --write "**/*.java"
 npm install --save-dev husky
 npx husky init
 
+# qulice
+
+mvnw.cmd qulice:check -X
+
 https://github.com/jhipster/prettier-java
