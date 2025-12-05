@@ -9,4 +9,12 @@ git merge my-feature-branch
 npm install prettier-plugin-java --save-dev 
 npx prettier --write "**/*.java"
 
+# install and use husky
+npm install --save-dev husky
+npx husky init
+
+# qulice
+
+mvnw.cmd qulice:check -X
+
 https://github.com/jhipster/prettier-java
