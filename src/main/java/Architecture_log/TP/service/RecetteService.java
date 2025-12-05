@@ -1,6 +1,6 @@
 package Architecture_log.TP.service;
 
-import Architecture_log.TP.entity.Recette;
+import Architecture_log.TP.entity.RecetteTest;
 import Architecture_log.TP.repository.RecetteRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -14,15 +14,15 @@ public class RecetteService {
     this.recetteRepository = recetteRepository;
   }
 
-  public List<Recette> getAllRecettes() {
+  public List<RecetteTest> getAllRecettes() {
     return recetteRepository.findAll();
   }
 
-  public Recette createRecette(Recette recette) {
+  public RecetteTest createRecette(RecetteTest recette) {
     return recetteRepository.save(recette);
   }
 
-  public Recette updateRecette(Long id, Recette recette) {
+  public RecetteTest updateRecette(Long id, RecetteTest recette) {
     recette.setId(id);
     return recetteRepository.save(recette);
   }

@@ -1,7 +1,7 @@
 package Architecture_log.TP.controller;
 
-import Architecture_log.TP.entity.Recette;
-import Architecture_log.TP.service.RecetteService;
+import Architecture_log.TP.entity.RecetteTest;
+import Architecture_log.TP.service.RecetteServiceTest;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/recettes")
 public class RecetteController {
 
-  private final RecetteService recetteService;
+  private final RecetteServiceTest recetteService;
 
-  public RecetteController(RecetteService recetteService) {
+  public RecetteController(RecetteServiceTest recetteService) {
     this.recetteService = recetteService;
   }
 
   @GetMapping
-  public List<Recette> getRecettes() {
+  public List<RecetteTest> getRecettes() {
     return recetteService.getAllRecettes();
   }
 
   @PostMapping
-  public Recette createRecette(@RequestBody Recette recette) {
+  public RecetteTest createRecette(@RequestBody RecetteTest recette) {
     return recetteService.createRecette(recette);
   }
 
   @PutMapping("/{id}")
-  public Recette updateRecette(
+  public RecetteTest updateRecette(
     @PathVariable Long id,
-    @RequestBody Recette recette
+    @RequestBody RecetteTest recette
   ) {
     return recetteService.updateRecette(id, recette);
   }
