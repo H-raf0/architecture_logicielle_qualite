@@ -1,5 +1,3 @@
 package Architecture_log.TP.repository;
 
-public class IngredientRepository {
-    
-}
+public class IngredientRepository {}

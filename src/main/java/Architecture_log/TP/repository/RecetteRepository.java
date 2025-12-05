@@ -1,7 +1,6 @@
 package Architecture_log.TP.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import Architecture_log.TP.entity.Recette;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RecetteRepository extends JpaRepository<Recette, Long> {
-}
+public interface RecetteRepository extends JpaRepository<Recette, Long> {}
