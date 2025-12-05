@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<qulice>
+    <checkers>
+        <checker>findbugs</checker>
+        <checker>pmd</checker>
+        <checker>checkstyle</checker>
+        <checker>codenarc</checker>
+        <checker>duplicates</checker>
+        <checker>cobertura</checker>
+        <checker>jcabi-validate</checker>
+        <checker>jcabi-dynamo</checker>
+    </checkers>
+    <excludes>
+        <exclude>findbugs:.*</exclude>
+        <exclude>checkstyle:.*Javadoc.*</exclude>
+    </excludes>
+</qulice>
