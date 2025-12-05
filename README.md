@@ -5,7 +5,8 @@ git merge my-feature-branch
 
 
 
-# to run prettier : 
+# to install and run prettier localy:
+npm install prettier-plugin-java --save-dev 
 npx prettier --write "**/*.java"
 
 https://github.com/jhipster/prettier-java
