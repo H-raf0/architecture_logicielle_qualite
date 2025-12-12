@@ -16,7 +16,7 @@ public class RecetteController {
   }
 
   @GetMapping
-  public List<Recette> getRecettes() {
+  public List<Recette> getAllRecettes() {
     return recetteService.getAllRecettes();
   }
 
