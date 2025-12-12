@@ -4,41 +4,43 @@ import Architecture_log.TP.entity.Ingredient;
 import Architecture_log.TP.entity.Recette;
 import Architecture_log.TP.service.IngredientService;
 import Architecture_log.TP.service.RecetteService;
-
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/recettes/{id}/ingredient")
+@RequestMapping("/recettes/{idRecette}/ingredients")
 public class IngredientController {
 
-    private final IngredientService ingredientService;
+  private final IngredientService ingredientService;
 
-    public IngredientController(IngredientService ingredientService) {
-        this.ingredientService = ingredientService;
-    }
-    /*
+  public IngredientController(IngredientService ingredientService) {
+    this.ingredientService = ingredientService;
+  }
+  /*
     @GetMapping
-    public List<Recette> getAllIngredientService() {
-        return ingredientService.getAllIngredient();
+    public List<Ingredient> getIngredientsByRecette(@PathVariable Long idRecette) {
+        return ingredientService.getIngredientsByRecette(idRecette);
     }
 
     @PostMapping
-    public Recette createRecette(@RequestBody Recette recette) {
-        return ingredientService.createIngredient(recette);
+    public Ingredient addIngredient(
+            @PathVariable Long idRecette,
+            @RequestBody Ingredient ingredient) {
+        return ingredientService.addIngredientToRecette(idRecette, ingredient);
     }
 
-    @PutMapping("/{id}")
-    public Recette updateRecette(
-            @PathVariable Long id,
-            @RequestBody Recette recette) {
-        return ingredientService.updateIngredient(id, recette);
+    @PutMapping("/{idIngredient}")
+    public Ingredient updateIngredient(
+            @PathVariable Long idRecette,
+            @PathVariable Long idIngredient,
+            @RequestBody Ingredient ingredient) {
+        return ingredientService.updateIngredient(idRecette, idIngredient, ingredient);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteRecette(@PathVariable Long id) {
-        ingredientService.deleteIngredient(id);
-    }
-    */
-
+    @DeleteMapping("/{idIngredient}")
+    public void deleteIngredient(
+            @PathVariable Long idRecette,
+            @PathVariable Long idIngredient) {
+        ingredientService.deleteIngredient(idRecette, idIngredient);
+    }*/
 }

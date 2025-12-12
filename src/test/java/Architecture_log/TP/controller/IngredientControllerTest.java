@@ -1,27 +1,28 @@
 package Architecture_log.TP.controller;
 
-import Architecture_log.TP.entity.Ingredient;
-import Architecture_log.TP.service.IngredientService;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 //import org.mockito.ArgumentCaptor;
 //import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import Architecture_log.TP.entity.Ingredient;
+import Architecture_log.TP.service.IngredientService;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class IngredientControllerTest {
 
-    private IngredientService ingredientService;
-    private IngredientController controller;
+  private IngredientService ingredientService;
+  private IngredientController controller;
 
-    @BeforeEach
-    void setup() {
-        ingredientService = mock(IngredientService.class);
-        controller = new IngredientController(ingredientService);
-    }
-    /*
+  @BeforeEach
+  void setup() {
+    ingredientService = mock(IngredientService.class);
+    controller = new IngredientController(ingredientService);
+  }
+  /*
     // Helper pour construire une Recette
     private Ingredient buildIngredient(Long id, String nom) {
         Ingredient r = new Ingredient();

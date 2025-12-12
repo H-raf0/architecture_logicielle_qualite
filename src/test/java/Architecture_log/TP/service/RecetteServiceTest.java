@@ -1,7 +1,3 @@
 package Architecture_log.TP.service;
 
-
-public class RecetteServiceTest {
-
-
-}
+public class RecetteServiceTest {}

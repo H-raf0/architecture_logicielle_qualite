@@ -4,6 +4,7 @@
     "prettier-plugin-java": "^2.7.7"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "format:java": "prettier --write \"src/**/*.java\""
   }
 }
