@@ -20,6 +20,11 @@ public class RecetteController {
     return recetteService.getAllRecettes();
   }
 
+  @GetMapping("/{id}")
+  public Recette getRecetteById(@PathVariable Long id){
+    return recetteService.getRecetteById(id);
+  }
+
   @PostMapping
   public Recette createRecette(@RequestBody Recette recette) {
     return recetteService.createRecette(recette);

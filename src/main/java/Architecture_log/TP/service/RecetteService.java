@@ -18,6 +18,10 @@ public class RecetteService {
     return recetteRepository.findAll();
   }
 
+  public Recette getRecetteById(Long id){
+    return recetteRepository.getReferenceById(id);
+  }
+
   public Recette createRecette(Recette recette) {
     return recetteRepository.save(recette);
   }

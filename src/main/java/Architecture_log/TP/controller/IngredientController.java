@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ingredient")
+@RequestMapping("/recettes/{id}/ingredient")
 public class IngredientController {
 
     private final IngredientService ingredientService;
