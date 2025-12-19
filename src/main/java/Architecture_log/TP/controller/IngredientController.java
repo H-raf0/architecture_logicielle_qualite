@@ -16,31 +16,40 @@ public class IngredientController {
   public IngredientController(IngredientService ingredientService) {
     this.ingredientService = ingredientService;
   }
-  /*
-    @GetMapping
-    public List<Ingredient> getIngredientsByRecette(@PathVariable Long idRecette) {
-        return ingredientService.getIngredientsByRecette(idRecette);
-    }
 
-    @PostMapping
-    public Ingredient addIngredient(
-            @PathVariable Long idRecette,
-            @RequestBody Ingredient ingredient) {
-        return ingredientService.addIngredientToRecette(idRecette, ingredient);
-    }
+  @GetMapping
+  public List<Ingredient> getIngredientsByRecette(
+    @PathVariable Long idRecette
+  ) {
+    return ingredientService.getIngredientsByRecette(idRecette);
+  }
 
-    @PutMapping("/{idIngredient}")
-    public Ingredient updateIngredient(
-            @PathVariable Long idRecette,
-            @PathVariable Long idIngredient,
-            @RequestBody Ingredient ingredient) {
-        return ingredientService.updateIngredient(idRecette, idIngredient, ingredient);
-    }
+  @PostMapping
+  public Ingredient addIngredient(
+    @PathVariable Long idRecette,
+    @RequestBody Ingredient ingredient
+  ) {
+    return ingredientService.addIngredientToRecette(idRecette, ingredient);
+  }
 
-    @DeleteMapping("/{idIngredient}")
-    public void deleteIngredient(
-            @PathVariable Long idRecette,
-            @PathVariable Long idIngredient) {
-        ingredientService.deleteIngredient(idRecette, idIngredient);
-    }*/
+  @PutMapping("/{idIngredient}")
+  public Ingredient updateIngredient(
+    @PathVariable Long idRecette,
+    @PathVariable Long idIngredient,
+    @RequestBody Ingredient ingredient
+  ) {
+    return ingredientService.updateIngredient(
+      idRecette,
+      idIngredient,
+      ingredient
+    );
+  }
+
+  @DeleteMapping("/{idIngredient}")
+  public void deleteIngredient(
+    @PathVariable Long idRecette,
+    @PathVariable Long idIngredient
+  ) {
+    ingredientService.deleteIngredient(idRecette, idIngredient);
+  }
 }
