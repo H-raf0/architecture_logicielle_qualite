@@ -21,3 +21,8 @@ npx husky init
 mvnw.cmd qulice:check -X
 
 https://github.com/jhipster/prettier-java
+
+
+
+TO DO:
+add more tests
