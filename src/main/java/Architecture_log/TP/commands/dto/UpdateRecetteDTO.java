@@ -1,6 +1,7 @@
 package Architecture_log.TP.commands.dto;
 
 public class UpdateRecetteDTO {
+
   private String nom;
 
   public UpdateRecetteDTO() {}
@@ -17,4 +18,3 @@ public class UpdateRecetteDTO {
     this.nom = nom;
   }
 }
-

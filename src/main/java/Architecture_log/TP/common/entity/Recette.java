@@ -38,4 +38,3 @@ public class Recette {
     this.nom = nom;
   }
 }
-

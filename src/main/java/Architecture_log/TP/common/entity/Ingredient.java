@@ -49,4 +49,3 @@ public class Ingredient {
     this.recette = recette;
   }
 }
-

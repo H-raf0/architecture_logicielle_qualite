@@ -1,6 +1,7 @@
 package Architecture_log.TP.queries.dto;
 
 public class RecetteDTO {
+
   private Long id;
   private String nom;
 
@@ -27,4 +28,3 @@ public class RecetteDTO {
     this.nom = nom;
   }
 }
-

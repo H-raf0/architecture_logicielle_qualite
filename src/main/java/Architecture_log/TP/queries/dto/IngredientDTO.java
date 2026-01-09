@@ -1,6 +1,7 @@
 package Architecture_log.TP.queries.dto;
 
 public class IngredientDTO {
+
   private Long id;
   private String nom;
   private Long recetteId;
@@ -37,4 +38,3 @@ public class IngredientDTO {
     this.recetteId = recetteId;
   }
 }
-

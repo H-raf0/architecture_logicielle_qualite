@@ -26,7 +26,9 @@ public class IngredientControllerTest {
   void setup() {
     ingredientCommandService = mock(IngredientCommandService.class);
     ingredientQueryService = mock(IngredientQueryService.class);
-    commandController = new IngredientCommandController(ingredientCommandService);
+    commandController = new IngredientCommandController(
+      ingredientCommandService
+    );
     queryController = new IngredientQueryController(ingredientQueryService);
   }
 
@@ -37,7 +39,11 @@ public class IngredientControllerTest {
     return i;
   }
 
-  private IngredientDTO buildIngredientDTO(Long id, String nom, Long recetteId) {
+  private IngredientDTO buildIngredientDTO(
+    Long id,
+    String nom,
+    Long recetteId
+  ) {
     IngredientDTO dto = new IngredientDTO();
     dto.setId(id);
     dto.setNom(nom);
@@ -50,8 +56,9 @@ public class IngredientControllerTest {
     IngredientDTO i1 = buildIngredientDTO(1L, "Farine", 1L);
     IngredientDTO i2 = buildIngredientDTO(2L, "Sucre", 1L);
 
-    when(ingredientQueryService.getIngredientsByRecette(1L))
-      .thenReturn(List.of(i1, i2));
+    when(ingredientQueryService.getIngredientsByRecette(1L)).thenReturn(
+      List.of(i1, i2)
+    );
 
     List<IngredientDTO> res = queryController.getIngredientsByRecette(1L);
 
@@ -63,18 +70,24 @@ public class IngredientControllerTest {
 
   @Test
   void shouldAddIngredient() {
-    Architecture_log.TP.commands.dto.CreateIngredientDTO input = new Architecture_log.TP.commands.dto.CreateIngredientDTO("Nouvel ingredient");
+    Architecture_log.TP.commands.dto.CreateIngredientDTO input =
+      new Architecture_log.TP.commands.dto.CreateIngredientDTO(
+        "Nouvel ingredient"
+      );
     Ingredient saved = buildIngredient(10L, "Nouvel ingredient");
 
-    when(ingredientCommandService.addIngredientToRecette(1L, input))
-      .thenReturn(saved);
+    when(ingredientCommandService.addIngredientToRecette(1L, input)).thenReturn(
+      saved
+    );
 
     Ingredient res = commandController.addIngredient(1L, input);
 
     assertNotNull(res);
     assertEquals(10L, res.getId());
     assertEquals("Nouvel ingredient", res.getNom());
-    verify(ingredientCommandService, times(1))
-      .addIngredientToRecette(1L, input);
+    verify(ingredientCommandService, times(1)).addIngredientToRecette(
+      1L,
+      input
+    );
   }
 }

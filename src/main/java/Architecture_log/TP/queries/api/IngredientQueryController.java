@@ -24,4 +24,3 @@ public class IngredientQueryController {
     return ingredientQueryService.getIngredientsByRecette(idRecette);
   }
 }
-

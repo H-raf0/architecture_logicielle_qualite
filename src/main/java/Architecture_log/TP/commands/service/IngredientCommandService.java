@@ -63,4 +63,3 @@ public class IngredientCommandService {
     ingredientRepository.delete(ingredient);
   }
 }
-

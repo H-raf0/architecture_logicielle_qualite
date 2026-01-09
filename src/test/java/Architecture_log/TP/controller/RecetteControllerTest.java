@@ -38,8 +38,12 @@ public class RecetteControllerTest {
     return r;
   }
 
-  private Architecture_log.TP.queries.dto.RecetteDTO buildRecetteDTO(Long id, String nom) {
-    Architecture_log.TP.queries.dto.RecetteDTO dto = new Architecture_log.TP.queries.dto.RecetteDTO();
+  private Architecture_log.TP.queries.dto.RecetteDTO buildRecetteDTO(
+    Long id,
+    String nom
+  ) {
+    Architecture_log.TP.queries.dto.RecetteDTO dto =
+      new Architecture_log.TP.queries.dto.RecetteDTO();
     dto.setId(id);
     dto.setNom(nom);
     return dto;
@@ -52,7 +56,8 @@ public class RecetteControllerTest {
 
     when(recetteQueryService.getAllRecettes()).thenReturn(List.of(r1, r2));
 
-    List<Architecture_log.TP.queries.dto.RecetteDTO> res = queryController.getAllRecettes();
+    List<Architecture_log.TP.queries.dto.RecetteDTO> res =
+      queryController.getAllRecettes();
 
     assertNotNull(res);
     assertEquals(2, res.size());
@@ -62,7 +67,8 @@ public class RecetteControllerTest {
 
   @Test
   void shouldCreateRecette() {
-    Architecture_log.TP.commands.dto.CreateRecetteDTO input = new Architecture_log.TP.commands.dto.CreateRecetteDTO("Nouvelle recette");
+    Architecture_log.TP.commands.dto.CreateRecetteDTO input =
+      new Architecture_log.TP.commands.dto.CreateRecetteDTO("Nouvelle recette");
     Recette saved = buildRecette(10L, "Nouvelle recette");
 
     when(recetteCommandService.createRecette(input)).thenReturn(saved);
@@ -77,7 +83,8 @@ public class RecetteControllerTest {
 
   @Test
   void shouldUpdateRecette() {
-    Architecture_log.TP.commands.dto.UpdateRecetteDTO input = new Architecture_log.TP.commands.dto.UpdateRecetteDTO("Modifiée");
+    Architecture_log.TP.commands.dto.UpdateRecetteDTO input =
+      new Architecture_log.TP.commands.dto.UpdateRecetteDTO("Modifiée");
     Recette updated = buildRecette(3L, "Modifiée");
 
     when(recetteCommandService.updateRecette(3L, input)).thenReturn(updated);

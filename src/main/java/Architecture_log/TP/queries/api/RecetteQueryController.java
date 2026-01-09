@@ -25,4 +25,3 @@ public class RecetteQueryController {
     return recetteQueryService.getRecetteById(id);
   }
 }
-

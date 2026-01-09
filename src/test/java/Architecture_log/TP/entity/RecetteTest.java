@@ -1,7 +1,8 @@
 package Architecture_log.TP.entity;
 
-import Architecture_log.TP.common.entity.Recette;
 import static org.junit.jupiter.api.Assertions.*;
+
+import Architecture_log.TP.common.entity.Recette;
 import org.junit.jupiter.api.Test;
 
 public class RecetteTest {

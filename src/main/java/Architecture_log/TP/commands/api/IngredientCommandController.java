@@ -47,4 +47,3 @@ public class IngredientCommandController {
     ingredientCommandService.deleteIngredient(idRecette, idIngredient);
   }
 }
-

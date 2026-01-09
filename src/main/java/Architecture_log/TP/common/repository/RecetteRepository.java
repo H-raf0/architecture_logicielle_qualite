@@ -6,4 +6,3 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface RecetteRepository extends JpaRepository<Recette, Long> {}
-

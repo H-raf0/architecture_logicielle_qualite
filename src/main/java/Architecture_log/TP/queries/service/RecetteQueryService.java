@@ -35,4 +35,3 @@ public class RecetteQueryService {
     return new RecetteDTO(recette.getId(), recette.getNom());
   }
 }
-

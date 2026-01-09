@@ -32,4 +32,3 @@ public class RecetteCommandService {
     recetteRepository.deleteById(id);
   }
 }
-

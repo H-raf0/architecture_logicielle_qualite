@@ -12,9 +12,7 @@ public class RecetteCommandController {
 
   private final RecetteCommandService recetteCommandService;
 
-  public RecetteCommandController(
-    RecetteCommandService recetteCommandService
-  ) {
+  public RecetteCommandController(RecetteCommandService recetteCommandService) {
     this.recetteCommandService = recetteCommandService;
   }
 
@@ -36,4 +34,3 @@ public class RecetteCommandController {
     recetteCommandService.deleteRecette(id);
   }
 }
-
