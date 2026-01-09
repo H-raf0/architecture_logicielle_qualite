@@ -1,23 +1,42 @@
 package Architecture_log.TP.commands.service;
 
 import Architecture_log.TP.commands.dto.CreateRecetteDTO;
+import Architecture_log.TP.commands.dto.RecetteCreatedEvent;
 import Architecture_log.TP.commands.dto.UpdateRecetteDTO;
 import Architecture_log.TP.common.entity.Recette;
 import Architecture_log.TP.common.repository.RecetteRepository;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class RecetteCommandService {
 
   private final RecetteRepository recetteRepository;
+  private final RecetteEventPublisher recetteEventPublisher;
 
-  public RecetteCommandService(RecetteRepository recetteRepository) {
+  public RecetteCommandService(
+    RecetteRepository recetteRepository,
+    RecetteEventPublisher recetteEventPublisher
+  ) {
     this.recetteRepository = recetteRepository;
+    this.recetteEventPublisher = recetteEventPublisher;
   }
 
+  @Retry(name = "recetteRetry")
   public Recette createRecette(CreateRecetteDTO dto) {
     Recette recette = new Recette(dto.getNom());
-    return recetteRepository.save(recette);
+    Recette savedRecette = recetteRepository.save(recette);
+
+    RecetteCreatedEvent event = new RecetteCreatedEvent(
+      savedRecette.getId(),
+      savedRecette.getNom(),
+      LocalDateTime.now()
+    );
+    recetteEventPublisher.publishRecetteCreated(event);
+
+    return savedRecette;
   }
 
   public Recette updateRecette(Long id, UpdateRecetteDTO dto) {
