@@ -63,4 +63,3 @@ class ArchitectureTest {
     .onlyBeAccessed()
     .byAnyPackage("..service..");
 }
-
