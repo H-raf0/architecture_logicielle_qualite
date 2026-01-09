@@ -1,5 +1,9 @@
 package Architecture_log.TP.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
 import Architecture_log.TP.commands.dto.CreateRecetteDTO;
 import Architecture_log.TP.commands.dto.RecetteCreatedEvent;
 import Architecture_log.TP.commands.service.RecetteCommandService;
@@ -14,10 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.QueryTimeoutException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RecetteCommandServiceTest {
@@ -46,7 +46,9 @@ class RecetteCommandServiceTest {
     savedRecette.setId(1L);
 
     when(recetteRepository.save(any(Recette.class))).thenReturn(savedRecette);
-    doNothing().when(recetteEventPublisher).publishRecetteCreated(any(RecetteCreatedEvent.class));
+    doNothing()
+      .when(recetteEventPublisher)
+      .publishRecetteCreated(any(RecetteCreatedEvent.class));
 
     // When
     Recette result = recetteCommandService.createRecette(dto);
@@ -60,8 +62,12 @@ class RecetteCommandServiceTest {
     verify(recetteRepository, times(1)).save(any(Recette.class));
 
     // Vérifier que l'événement Kafka a été publié
-    ArgumentCaptor<RecetteCreatedEvent> eventCaptor = ArgumentCaptor.forClass(RecetteCreatedEvent.class);
-    verify(recetteEventPublisher, times(1)).publishRecetteCreated(eventCaptor.capture());
+    ArgumentCaptor<RecetteCreatedEvent> eventCaptor = ArgumentCaptor.forClass(
+      RecetteCreatedEvent.class
+    );
+    verify(recetteEventPublisher, times(1)).publishRecetteCreated(
+      eventCaptor.capture()
+    );
 
     RecetteCreatedEvent publishedEvent = eventCaptor.getValue();
     assertNotNull(publishedEvent);
@@ -76,12 +82,13 @@ class RecetteCommandServiceTest {
     CreateRecetteDTO dto = new CreateRecetteDTO("Recette à retry");
 
     // Simuler une erreur de base de données
-    when(recetteRepository.save(any(Recette.class)))
-      .thenThrow(new QueryTimeoutException("Database timeout"));
+    when(recetteRepository.save(any(Recette.class))).thenThrow(
+      new QueryTimeoutException("Database timeout")
+    );
 
     // When & Then - Note: Resilience4J retry nécessite un contexte Spring avec AOP
     // Ce test unitaire simple ne peut pas tester le retry réellement car l'annotation @Retry
-    // ne fonctionne que dans un contexte Spring. Pour tester le retry, utilisez un test 
+    // ne fonctionne que dans un contexte Spring. Pour tester le retry, utilisez un test
     // d'intégration avec @SpringBootTest. Ici, on teste juste que l'exception est bien levée
     assertThrows(QueryTimeoutException.class, () -> {
       recetteCommandService.createRecette(dto);
@@ -99,7 +106,8 @@ class RecetteCommandServiceTest {
     savedRecette.setId(3L);
 
     when(recetteRepository.save(any(Recette.class))).thenReturn(savedRecette);
-    doThrow(new RuntimeException("Kafka error")).when(recetteEventPublisher)
+    doThrow(new RuntimeException("Kafka error"))
+      .when(recetteEventPublisher)
       .publishRecetteCreated(any(RecetteCreatedEvent.class));
 
     // When & Then - La recette devrait être créée même si Kafka échoue
@@ -109,7 +117,8 @@ class RecetteCommandServiceTest {
     });
 
     verify(recetteRepository, times(1)).save(any(Recette.class));
-    verify(recetteEventPublisher, times(1)).publishRecetteCreated(any(RecetteCreatedEvent.class));
+    verify(recetteEventPublisher, times(1)).publishRecetteCreated(
+      any(RecetteCreatedEvent.class)
+    );
   }
 }
-
