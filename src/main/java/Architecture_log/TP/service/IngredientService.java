@@ -5,11 +5,12 @@ import Architecture_log.TP.entity.Recette;
 import Architecture_log.TP.repository.IngredientRepository;
 import Architecture_log.TP.repository.RecetteRepository;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import org.jmolecules.ddd.annotation.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
+@org.springframework.stereotype.Service
 public class IngredientService {
 
   private final IngredientRepository ingredientRepository;
