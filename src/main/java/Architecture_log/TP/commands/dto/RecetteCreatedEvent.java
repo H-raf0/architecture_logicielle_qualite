@@ -40,4 +40,3 @@ public class RecetteCreatedEvent {
     this.createdAt = createdAt;
   }
 }
-
