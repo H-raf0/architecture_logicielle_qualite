@@ -60,6 +60,17 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- jMolecules for DDD annotations -->
+		  <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-ddd</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jmolecules.integrations</groupId>
+            <artifactId>jmolecules-spring</artifactId>
+            <version>0.19.0</version>
+        </dependency>
+		<dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5</artifactId>
