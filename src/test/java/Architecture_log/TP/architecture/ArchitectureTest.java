@@ -14,52 +14,95 @@ import com.tngtech.archunit.lang.ArchRule;
 class ArchitectureTest {
 
   @ArchTest
-  static final ArchRule controllers = classes()
+  static final ArchRule command_controllers = classes()
     .that()
-    .haveSimpleNameEndingWith("Controller")
+    .haveSimpleNameEndingWith("CommandController")
     .should()
-    .resideInAPackage("..controller..");
+    .resideInAPackage("..commands.api..");
 
   @ArchTest
-  static final ArchRule services = classes()
+  static final ArchRule query_controllers = classes()
     .that()
-    .haveSimpleNameEndingWith("Service")
+    .haveSimpleNameEndingWith("QueryController")
     .should()
-    .resideInAPackage("..service..");
+    .resideInAPackage("..queries.api..");
+
+  @ArchTest
+  static final ArchRule command_services = classes()
+    .that()
+    .haveSimpleNameEndingWith("CommandService")
+    .should()
+    .resideInAPackage("..commands.service..");
+
+  @ArchTest
+  static final ArchRule query_services = classes()
+    .that()
+    .haveSimpleNameEndingWith("QueryService")
+    .should()
+    .resideInAPackage("..queries.service..");
 
   @ArchTest
   static final ArchRule repositories = classes()
     .that()
     .haveSimpleNameEndingWith("Repository")
     .should()
-    .resideInAPackage("..repository..");
+    .resideInAPackage("..common.repository..");
 
   @ArchTest
-  static final ArchRule controllers_should_only_depend_on_services = classes()
+  static final ArchRule entities = classes()
     .that()
-    .resideInAPackage("..controller..")
+    .resideInAPackage("..common.entity..")
     .should()
-    .onlyDependOnClassesThat()
-    .resideInAnyPackage(
-      "java..",
-      "org.springframework..",
-      "..service..",
-      "..entity.."
-    );
+    .haveSimpleName("Recette")
+    .orShould()
+    .haveSimpleName("Ingredient");
 
   @ArchTest
-  static final ArchRule services_should_not_depend_on_controllers = noClasses()
-    .that()
-    .resideInAPackage("..service..")
-    .should()
-    .dependOnClassesThat()
-    .resideInAPackage("..controller..");
+  static final ArchRule command_controllers_should_only_depend_on_command_services =
+    classes()
+      .that()
+      .resideInAPackage("..commands.api..")
+      .should()
+      .onlyDependOnClassesThat()
+      .resideInAnyPackage(
+        "java..",
+        "org.springframework..",
+        "..commands.service..",
+        "..commands.dto..",
+        "..common.entity.."
+      )
+      .orShould()
+      .haveSimpleName("CreateRecetteDTO")
+      .orShould()
+      .haveSimpleName("UpdateRecetteDTO")
+      .orShould()
+      .haveSimpleName("CreateIngredientDTO")
+      .orShould()
+      .haveSimpleName("UpdateIngredientDTO");
+
+  @ArchTest
+  static final ArchRule query_controllers_should_only_depend_on_query_services =
+    classes()
+      .that()
+      .resideInAPackage("..queries.api..")
+      .should()
+      .onlyDependOnClassesThat()
+      .resideInAnyPackage(
+        "java..",
+        "org.springframework..",
+        "..queries.service..",
+        "..queries.dto.."
+      )
+      .orShould()
+      .haveSimpleName("RecetteDTO")
+      .orShould()
+      .haveSimpleName("IngredientDTO");
 
   @ArchTest
   static final ArchRule repositories_only_accessed_by_services = classes()
     .that()
-    .resideInAPackage("..repository..")
+    .resideInAPackage("..common.repository..")
     .should()
     .onlyBeAccessed()
-    .byAnyPackage("..service..");
+    .byAnyPackage("..commands.service..", "..queries.service..");
 }

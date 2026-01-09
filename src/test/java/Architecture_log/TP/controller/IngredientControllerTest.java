@@ -1,103 +1,80 @@
 package Architecture_log.TP.controller;
 
-//import org.mockito.ArgumentCaptor;
-//import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import Architecture_log.TP.entity.Ingredient;
-import Architecture_log.TP.service.IngredientService;
+import Architecture_log.TP.commands.api.IngredientCommandController;
+import Architecture_log.TP.commands.dto.CreateIngredientDTO;
+import Architecture_log.TP.commands.dto.UpdateIngredientDTO;
+import Architecture_log.TP.commands.service.IngredientCommandService;
+import Architecture_log.TP.common.entity.Ingredient;
+import Architecture_log.TP.queries.api.IngredientQueryController;
+import Architecture_log.TP.queries.dto.IngredientDTO;
+import Architecture_log.TP.queries.service.IngredientQueryService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class IngredientControllerTest {
 
-  private IngredientService ingredientService;
-  private IngredientController controller;
+  private IngredientCommandService ingredientCommandService;
+  private IngredientQueryService ingredientQueryService;
+  private IngredientCommandController commandController;
+  private IngredientQueryController queryController;
 
   @BeforeEach
   void setup() {
-    ingredientService = mock(IngredientService.class);
-    controller = new IngredientController(ingredientService);
+    ingredientCommandService = mock(IngredientCommandService.class);
+    ingredientQueryService = mock(IngredientQueryService.class);
+    commandController = new IngredientCommandController(ingredientCommandService);
+    queryController = new IngredientQueryController(ingredientQueryService);
   }
-  /*
-    // Helper pour construire une Recette
-    private Ingredient buildIngredient(Long id, String nom) {
-        Ingredient r = new Ingredient();
-        r.setId(id);
-        r.setNom(nom);
-        return r;
-    }
 
-    @Test
-    void shouldReturnAllRecettes() {
-        Ingredient r1 = buildRecette(1L, "Tarte aux pommes");
-        Ingredient r2 = buildRecette(2L, "Quiche Lorraine");
+  private Ingredient buildIngredient(Long id, String nom) {
+    Ingredient i = new Ingredient();
+    i.setId(id);
+    i.setNom(nom);
+    return i;
+  }
 
-        when(recetteService.getAllRecettes()).thenReturn(List.of(r1, r2));
+  private IngredientDTO buildIngredientDTO(Long id, String nom, Long recetteId) {
+    IngredientDTO dto = new IngredientDTO();
+    dto.setId(id);
+    dto.setNom(nom);
+    dto.setRecetteId(recetteId);
+    return dto;
+  }
 
-        List<Ingredient> res = controller.getAllRecettes();
+  @Test
+  void shouldReturnIngredientsByRecette() {
+    IngredientDTO i1 = buildIngredientDTO(1L, "Farine", 1L);
+    IngredientDTO i2 = buildIngredientDTO(2L, "Sucre", 1L);
 
-        assertNotNull(res);
-        assertEquals(2, res.size());
-        assertEquals("Tarte aux pommes", res.get(0).getNom());
-        verify(recetteService, times(1)).getAllRecettes();
-    }
-    /*
-    @Test
-    void shouldReturnRecetteById() {
-        Recette r = buildRecette(5L, "Soupe");
-        when(recetteService.getRecetteById(5L)).thenReturn(r);
+    when(ingredientQueryService.getIngredientsByRecette(1L))
+      .thenReturn(List.of(i1, i2));
 
-        Recette res = controller.getRecetteById(5L);
+    List<IngredientDTO> res = queryController.getIngredientsByRecette(1L);
 
-        assertNotNull(res);
-        assertEquals(5L, res.getId());
-        assertEquals("Soupe", res.getNom());
-        verify(recetteService, times(1)).getRecetteById(5L);
-    }
-    * /
+    assertNotNull(res);
+    assertEquals(2, res.size());
+    assertEquals("Farine", res.get(0).getNom());
+    verify(ingredientQueryService, times(1)).getIngredientsByRecette(1L);
+  }
 
-    @Test
-    void shouldCreateRecette() {
-        Ingredient input = buildRecette(null, "Nouvelle recette");
-        Ingredient saved = buildRecette(10L, "Nouvelle recette");
+  @Test
+  void shouldAddIngredient() {
+    Architecture_log.TP.commands.dto.CreateIngredientDTO input = new Architecture_log.TP.commands.dto.CreateIngredientDTO("Nouvel ingredient");
+    Ingredient saved = buildIngredient(10L, "Nouvel ingredient");
 
-        when(recetteService.createRecette(input)).thenReturn(saved);
+    when(ingredientCommandService.addIngredientToRecette(1L, input))
+      .thenReturn(saved);
 
-        Ingredient res = controller.createRecette(input);
+    Ingredient res = commandController.addIngredient(1L, input);
 
-        assertNotNull(res);
-        assertEquals(10L, res.getId());
-        assertEquals("Nouvelle recette", res.getNom());
-        verify(recetteService, times(1)).createRecette(input);
-    }
-
-    @Test
-    void shouldUpdateRecette() {
-        Ingredient input = buildRecette(null, "Modifiée");
-        Ingredient updated = buildRecette(3L, "Modifiée");
-
-        when(recetteService.updateRecette(3L, input)).thenReturn(updated);
-
-        Ingredient res = controller.updateRecette(3L, input);
-
-        assertNotNull(res);
-        assertEquals(3L, res.getId());
-        assertEquals("Modifiée", res.getNom());
-        verify(recetteService, times(1)).updateRecette(3L, input);
-    }
-
-    @Test
-    void shouldDeleteRecette() {
-        // deleteRecette est void, on vérifie l'appel
-        doNothing().when(recetteService).deleteRecette(7L);
-
-        controller.deleteRecette(7L);
-
-        verify(recetteService, times(1)).deleteRecette(7L);
-    }
-    */
+    assertNotNull(res);
+    assertEquals(10L, res.getId());
+    assertEquals("Nouvel ingredient", res.getNom());
+    verify(ingredientCommandService, times(1))
+      .addIngredientToRecette(1L, input);
+  }
 }
