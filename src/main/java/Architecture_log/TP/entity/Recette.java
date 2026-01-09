@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.jmolecules.ddd.annotation.AggregateRoot;
 
 @Entity
+@AggregateRoot
 public class Recette {
 
   @Id

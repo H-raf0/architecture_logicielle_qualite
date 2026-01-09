@@ -3,9 +3,10 @@ package Architecture_log.TP.service;
 import Architecture_log.TP.entity.Recette;
 import Architecture_log.TP.repository.RecetteRepository;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import org.jmolecules.ddd.annotation.Service;
 
 @Service
+@org.springframework.stereotype.Service
 public class RecetteService {
 
   private final RecetteRepository recetteRepository;

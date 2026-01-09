@@ -1,8 +1,10 @@
 package Architecture_log.TP.entity;
 
 import jakarta.persistence.*;
+import org.jmolecules.ddd.annotation.AggregateRoot;
 
 @Entity
+@AggregateRoot
 public class Ingredient {
 
   @Id
