@@ -1,0 +1,174 @@
+version: '3'
+
+# Taskfile pour automatiser les commandes du projet
+# Installation: https://taskfile.dev/installation/
+# Usage: task <nom-de-la-tache>
+
+tasks:
+#Build 
+  
+  build:
+    desc: "Compiler le projet"
+    cmds:
+      - .\mvnw.cmd clean compile
+
+  test:
+    desc: "Lancer tous les tests"
+    cmds:
+      - .\mvnw.cmd test
+
+  test:archunit:
+    desc: "Lancer uniquement les tests ArchUnit"
+    cmds:
+      - .\mvnw.cmd test -Dtest=ArchitectureTest
+
+  test:commands:
+    desc: "Lancer les tests des Command Services"
+    cmds:
+      - .\mvnw.cmd test -Dtest=*CommandServiceTest
+
+  test:queries:
+    desc: "Lancer les tests des Query Services"
+    cmds:
+      - .\mvnw.cmd test -Dtest=*QueryServiceTest
+
+  test:integration:
+    desc: "Lancer les tests d'intégration"
+    cmds:
+      - .\mvnw.cmd test -Dtest=*IntegrationTest
+
+  test:entity:
+    desc: "Lancer les tests des entités"
+    cmds:
+      - .\mvnw.cmd test -Dtest=*EntityTest
+
+  test:repository:
+    desc: "Lancer les tests des repositories"
+    cmds:
+      - .\mvnw.cmd test -Dtest=*RepositoryTest
+
+  package:
+    desc: "Créer le JAR"
+    cmds:
+      - .\mvnw.cmd clean package
+
+  install:
+    desc: "Installer les dépendances Maven"
+    cmds:
+      - .\mvnw.cmd clean install
+
+  run:
+    desc: "Démarrer l'application Spring Boot"
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - cmd /c mvnw.cmd spring-boot:run
+
+  run:dev:
+    desc: "Démarrer l'application en mode développement"
+    cmds:
+      - .\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev
+
+  # Quality & Validation
+
+  quality:
+    desc: "Vérifier la qualité du code (Checkstyle)"
+    cmds:
+      - .\mvnw.cmd checkstyle:check
+
+  verify:
+    desc: "Vérifier le projet (compile + test + quality)"
+    cmds:
+      - .\mvnw.cmd verify
+
+  # Clean
+  
+  clean:
+    desc: "Nettoyer le projet (supprimer target/)"
+    cmds:
+      - .\mvnw.cmd clean
+
+  # Git Operations
+  
+  git:status:
+    desc: "Voir l'état Git"
+    cmds:
+      - git status
+
+  git:log:
+    desc: "Voir l'historique Git"
+    cmds:
+      - git log --oneline --graph --all -10
+
+  git:branches:
+    desc: "Lister toutes les branches"
+    cmds:
+      - git branch -a
+
+  git:pull:
+    desc: "Récupérer les changements du remote"
+    cmds:
+      - git pull
+
+  git:push:
+    desc: "Pousser les changements vers le remote"
+    cmds:
+      - git push
+
+  # API Testing (CQRS) 
+  api:recettes:list:
+    desc: "Lister toutes les recettes (Query)"
+    cmds:
+      - curl http://localhost:8080/recettes
+
+  api:recettes:get:
+    desc: "Récupérer une recette par ID (Query)"
+    cmds:
+      - curl http://localhost:8080/recettes/1
+
+  api:recettes:create:
+    desc: "Créer une nouvelle recette (Command)"
+    cmds:
+      - 'curl -X POST http://localhost:8080/recettes -H "Content-Type: application/json" -d "{\"nom\":\"Pizza Margherita\"}"'
+
+  api:recettes:update:
+    desc: "Mettre à jour une recette (Command)"
+    cmds:
+      - 'curl -X PUT http://localhost:8080/recettes/1 -H "Content-Type: application/json" -d "{\"nom\":\"Pizza Napolitaine\"}"'
+
+  api:recettes:delete:
+    desc: "Supprimer une recette (Command)"
+    cmds:
+      - curl -X DELETE http://localhost:8080/recettes/1
+
+  api:ingredients:list:
+    desc: "Lister tous les ingrédients d'une recette (Query)"
+    cmds:
+      - curl http://localhost:8080/recettes/1/ingredients
+
+  api:ingredients:get:
+    desc: "Récupérer un ingrédient par ID (Query)"
+    cmds:
+      - curl http://localhost:8080/recettes/1/ingredients/1
+
+  api:ingredients:create:
+    desc: "Ajouter un ingrédient à une recette (Command)"
+    cmds:
+      - 'curl -X POST http://localhost:8080/recettes/1/ingredients -H "Content-Type: application/json" -d "{\"nom\":\"Tomate\",\"quantite\":\"500g\"}"'
+
+  api:ingredients:update:
+    desc: "Mettre à jour un ingrédient (Command)"
+    cmds:
+      - 'curl -X PUT http://localhost:8080/recettes/1/ingredients/1 -H "Content-Type: application/json" -d "{\"nom\":\"Tomate bio\",\"quantite\":\"600g\"}"'
+
+  api:ingredients:delete:
+    desc: "Supprimer un ingrédient (Command)"
+    cmds:
+      - curl -X DELETE http://localhost:8080/recettes/1/ingredients/1
+
+  # Help
+  
+  default:
+    desc: "Afficher l'aide"
+    cmds:
+      - task --list
+    silent: true
