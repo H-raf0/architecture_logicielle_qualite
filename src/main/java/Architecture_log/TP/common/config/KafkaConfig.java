@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
 public class KafkaConfig {
@@ -29,8 +28,9 @@ public class KafkaConfig {
     );
     configProps.put(
       ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-      JsonSerializer.class
+      "org.apache.kafka.common.serialization.StringSerializer"
     );
+    configProps.put("spring.json.type.mapping", "recetteCreatedEvent:Architecture_log.TP.commands.dto.RecetteCreatedEvent");
     return new DefaultKafkaProducerFactory<>(configProps);
   }
 

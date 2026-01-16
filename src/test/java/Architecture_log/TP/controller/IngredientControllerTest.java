@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import Architecture_log.TP.commands.api.IngredientCommandController;
-import Architecture_log.TP.commands.dto.CreateIngredientDTO;
-import Architecture_log.TP.commands.dto.UpdateIngredientDTO;
+
 import Architecture_log.TP.commands.service.IngredientCommandService;
 import Architecture_log.TP.common.entity.Ingredient;
 import Architecture_log.TP.queries.api.IngredientQueryController;
