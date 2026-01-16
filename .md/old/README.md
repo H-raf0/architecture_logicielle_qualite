@@ -30,3 +30,14 @@ https://github.com/jhipster/prettier-java
 
 TO DO:
 add more tests
+
+errors in bdd ?
+
+
+
+
+
+
+
+task : 
+choco install go-task

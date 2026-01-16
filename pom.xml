@@ -152,11 +152,11 @@
 					</includes>
 				</configuration>
 			</plugin>
-			<!-- Cucumber Plugin for BDD reports -->
+			<!-- Cucumber Plugin for BDD reports - DISABLED: plugin version not available in Maven Central
 			<plugin>
 				<groupId>io.cucumber</groupId>
 				<artifactId>cucumber-maven-plugin</artifactId>
-				<version>7.18.0</version>
+			<version>7.14.0</version>
 				<executions>
 					<execution>
 						<id>report</id>
@@ -175,6 +175,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>com.qulice</groupId>
 				<artifactId>qulice-maven-plugin</artifactId>
