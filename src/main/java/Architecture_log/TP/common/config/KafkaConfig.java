@@ -30,7 +30,10 @@ public class KafkaConfig {
       ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
       "org.apache.kafka.common.serialization.StringSerializer"
     );
-    configProps.put("spring.json.type.mapping", "recetteCreatedEvent:Architecture_log.TP.commands.dto.RecetteCreatedEvent");
+    configProps.put(
+      "spring.json.type.mapping",
+      "recetteCreatedEvent:Architecture_log.TP.commands.dto.RecetteCreatedEvent"
+    );
     return new DefaultKafkaProducerFactory<>(configProps);
   }
 
