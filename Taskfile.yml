@@ -10,82 +10,88 @@ tasks:
   build:
     desc: "Compiler le projet"
     cmds:
-      - mvnw.cmd clean compile
+      - mvn clean compile
 
   test:
     desc: "Lancer tous les tests"
     cmds:
-      - mvnw.cmd test
+      - mvn test
 
   test:archunit:
     desc: "Lancer uniquement les tests ArchUnit"
     cmds:
-      - mvnw.cmd test -Dtest=ArchitectureTest
+      - mvn test -Dtest=ArchitectureTest
 
   test:commands:
     desc: "Lancer les tests des Command Services"
     cmds:
-      - mvnw.cmd test -Dtest=*CommandServiceTest
+      - mvn test -Dtest=*CommandServiceTest
 
   test:queries:
     desc: "Lancer les tests des Query Services"
     cmds:
-      - mvnw.cmd test -Dtest=*QueryServiceTest
+      - mvn test -Dtest=*QueryServiceTest
 
   test:integration:
     desc: "Lancer les tests d'intégration"
     cmds:
-      - mvnw.cmd test -Dtest=*IntegrationTest
+      - mvn test -Dtest=*IntegrationTest
 
   test:entity:
     desc: "Lancer les tests des entités"
     cmds:
-      - mvnw.cmd test -Dtest=*EntityTest
+      - mvn test -Dtest=*EntityTest
 
   test:repository:
     desc: "Lancer les tests des repositories"
     cmds:
-      - mvnw.cmd test -Dtest=*RepositoryTest
+      - mvn test -Dtest=*RepositoryTest
 
   package:
     desc: "Créer le JAR"
     cmds:
-      - mvnw.cmd clean package
+      - mvn clean package
 
   install:
     desc: "Installer les dépendances Maven"
     cmds:
-      - mvnw.cmd clean install
+      - mvn clean install
 
   run:
     desc: "Démarrer l'application Spring Boot"
     dir: "{{.USER_WORKING_DIR}}"
     cmds:
-      - cmd /c mvnw.cmd spring-boot:run
+      - cmd /c mvn spring-boot:run
 
   run:dev:
     desc: "Démarrer l'application en mode développement"
     cmds:
-      - mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev
+      - mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
   # Quality & Validation
 
   quality:
-    desc: "Vérifier la qualité du code (Checkstyle)"
+    desc: "Vérifier la qualité du code (Prettier)"
     cmds:
-      - mvnw.cmd checkstyle:check
+      - npm run format:java -- --check
+
+  format:
+    desc: "Formater le code avec Prettier"
+    cmds:
+      - npm run format:java
 
   verify:
     desc: "Vérifier le projet (compile + test + quality)"
     cmds:
-      - mvnw.cmd verify
+      - mvn verify
+      - npm run format:java -- --check
 
   # Clean
   
   clean:
     desc: "Nettoyer le projet (supprimer target/)"
     cmds:
-      - mvnw.cmd clean
+      - mvn clean
 
   # Git Operations
   

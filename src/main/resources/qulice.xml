@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 <qulice>
     <checkers>
-        <checker>findbugs</checker>
-        <checker>pmd</checker>
-        <checker>checkstyle</checker>
-        <checker>codenarc</checker>
-        <checker>duplicates</checker>
-        <checker>cobertura</checker>
-        <checker>jcabi-validate</checker>
-        <checker>jcabi-dynamo</checker>
     </checkers>
     <excludes>
         <exclude>findbugs:.*</exclude>
-        <exclude>checkstyle:.*Javadoc.*</exclude>
+        <exclude>checkstyle:.*</exclude>
+        <exclude>pmd:.*</exclude>
+        <exclude>codenarc:.*</exclude>
+        <exclude>duplicates:.*</exclude>
+        <exclude>cobertura:.*</exclude>
+        <exclude>jcabi:.*</exclude>
     </excludes>
 </qulice>

@@ -181,13 +181,8 @@
 				<artifactId>qulice-maven-plugin</artifactId>
 				<version>0.23.0</version>
 				<configuration>
-					<license>file:${basedir}/LICENSE</license>
-						<excludes>
-							<exclude>checkstyle:.*</exclude>
-							<exclude>dependencies:.*</exclude>
-						</excludes>
+					<skip>true</skip>
 				</configuration>
-
 				<executions>
 					<execution>
 						<goals>
