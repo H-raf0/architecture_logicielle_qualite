@@ -27,9 +27,8 @@ tasks:
     desc: "Démarrer Docker (app + Kafka)"
     cmds:
       - docker-compose up -d
-      - echo "⏳ Attente du démarrage..."
-      - for /L %i in (1,1,30) do @(curl -s http://localhost:8080/actuator/health >nul 2>&1 && (echo "✓ Prêt sur http://localhost:8080" && exit /b 0) || (echo "Tentative %i/30..." && timeout /t 2 >nul))
-      - echo "✗ Timeout"
+      - echo "Services demarres - attente 30s pour l'app"
+      - timeout /t 30 /nobreak
 
   down:
     desc: "Arrêter Docker"
@@ -45,14 +44,13 @@ tasks:
     desc: "Vérifier la santé"
     cmds:
       - docker-compose ps
-      - echo ""
-      - curl -s http://localhost:8080/actuator/health | jq . || echo "Non disponible"
+      - curl -s http://localhost:8080/actuator/health
 
   # API
   api:
-    desc: "Ouvrir API (api/recettes.http)"
+    desc: "Ouvrir API"
     cmds:
-      - code api/recettes.http || echo "Ouvrez: api/recettes.http"
+      - echo "Ouvrez api/recettes.http"
 
   # QUICK WORKFLOWS
   start:
@@ -73,66 +71,6 @@ tasks:
       - mvn clean
 
   default:
-    cmds:
-      - task --list
-    silent: true
-
-
-  # API Testing (CQRS) 
-  api:recettes:list:
-    desc: "Lister toutes les recettes (Query)"
-    cmds:
-      - curl http://localhost:8080/recettes
-
-  api:recettes:get:
-    desc: "Récupérer une recette par ID (Query)"
-    cmds:
-      - curl http://localhost:8080/recettes/1
-
-  api:recettes:create:
-    desc: "Créer une nouvelle recette (Command)"
-    cmds:
-      - 'curl -X POST http://localhost:8080/recettes -H "Content-Type: application/json" -d "{\"nom\":\"Pizza Margherita\"}"'
-
-  api:recettes:update:
-    desc: "Mettre à jour une recette (Command)"
-    cmds:
-      - 'curl -X PUT http://localhost:8080/recettes/1 -H "Content-Type: application/json" -d "{\"nom\":\"Pizza Napolitaine\"}"'
-
-  api:recettes:delete:
-    desc: "Supprimer une recette (Command)"
-    cmds:
-      - curl -X DELETE http://localhost:8080/recettes/1
-
-  api:ingredients:list:
-    desc: "Lister tous les ingrédients d'une recette (Query)"
-    cmds:
-      - curl http://localhost:8080/recettes/1/ingredients
-
-  api:ingredients:get:
-    desc: "Récupérer un ingrédient par ID (Query)"
-    cmds:
-      - curl http://localhost:8080/recettes/1/ingredients/1
-
-  api:ingredients:create:
-    desc: "Ajouter un ingrédient à une recette (Command)"
-    cmds:
-      - 'curl -X POST http://localhost:8080/recettes/1/ingredients -H "Content-Type: application/json" -d "{\"nom\":\"Tomate\",\"quantite\":\"500g\"}"'
-
-  api:ingredients:update:
-    desc: "Mettre à jour un ingrédient (Command)"
-    cmds:
-      - 'curl -X PUT http://localhost:8080/recettes/1/ingredients/1 -H "Content-Type: application/json" -d "{\"nom\":\"Tomate bio\",\"quantite\":\"600g\"}"'
-
-  api:ingredients:delete:
-    desc: "Supprimer un ingrédient (Command)"
-    cmds:
-      - curl -X DELETE http://localhost:8080/recettes/1/ingredients/1
-
-  # Help
-  
-  default:
-    desc: "Afficher l'aide"
     cmds:
       - task --list
     silent: true
