@@ -65,7 +65,7 @@ Content-Type: {{contentType}}
   "prix": 2.50,
   "unite": "g"
 }
-
+/*
 ### 10. Ajouter plusieurs ingrédients
 POST {{baseUrl}}/recettes/1/ingredients
 Content-Type: {{contentType}}
@@ -76,6 +76,7 @@ Content-Type: {{contentType}}
   "prix": 4.50,
   "unite": "g"
 }
+*/
 
 ### 11. Mettre à jour un ingrédient (Command)
 PUT {{baseUrl}}/recettes/1/ingredients/1

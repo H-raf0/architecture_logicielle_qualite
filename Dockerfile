@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM maven:3.8.1-jdk-17 AS builder
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
@@ -16,12 +16,12 @@ COPY src src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:17-slim
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Create a non-root user for security
-RUN useradd -m -u 1000 appuser
+# Create a non-root user for security (Alpine uses adduser instead of useradd)
+RUN addgroup -g 1000 appuser && adduser -D -u 1000 -G appuser appuser
 
 # Copy the JAR from builder
 COPY --from=builder /app/target/*.jar app.jar
