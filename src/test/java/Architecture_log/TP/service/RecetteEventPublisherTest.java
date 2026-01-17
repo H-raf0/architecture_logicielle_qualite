@@ -65,7 +65,7 @@ class RecetteEventPublisherTest {
       eventCaptor.capture()
     );
 
-    assertEquals("recette-created", topicCaptor.getValue());
+    assertEquals("recette-events", topicCaptor.getValue());
     assertEquals("1", keyCaptor.getValue()); // ID de la recette comme clé
     RecetteCreatedEvent capturedEvent = eventCaptor.getValue();
     assertEquals(1L, capturedEvent.getId());

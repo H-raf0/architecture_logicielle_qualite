@@ -1,9 +1,8 @@
 # ADR-002: Utilisation de Kafka comme Message Bus pour les Événements
 
-**Date:** Janvier 2025  
-**Status:** Accepté  
-**Authors:** Équipe Logicielle  
-**Context:** Architecture CQRS - Gestion des événements asynchrones
+**Date:** Janvier 2025 
+**Authors:** Achraf EL ALLALI, WIAM ABDELLAOUI
+**Context:** Projet TP - Architecture Logicielle et Qualité
 
 ---
 
@@ -333,5 +332,5 @@ public class KafkaIntegrationTest {
 
 ---
 
-**Approved by:** [À compléter]  
+**Approved by:** Achraf EL ALLALI, WIAM ABDELLAOUI 
 **Last reviewed:** Janvier 2025

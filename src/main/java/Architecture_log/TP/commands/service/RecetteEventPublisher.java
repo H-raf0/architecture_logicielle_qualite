@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class RecetteEventPublisher {
 
-  /** Nom du topic Kafka utilisé pour les événements de création de recette. */
-  private static final String TOPIC_NAME = "recette-created";
+  /** Nom du topic Kafka utilisé pour les événements de recettes. */
+  private static final String TOPIC_NAME = "recette-events";
 
   private static final Logger logger = LoggerFactory.getLogger(
     RecetteEventPublisher.class

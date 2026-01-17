@@ -1,8 +1,7 @@
 # ADR-001: Architecture CQRS pour la Gestion des Recettes
 
-**Date:** Janvier 2025  
-**Status:** Accepté  
-**Authors:** Équipe Logicielle  
+**Date:** Janvier 2025 
+**Authors:** Achraf EL ALLALI, WIAM ABDELLAOUI
 **Context:** Projet TP - Architecture Logicielle et Qualité
 
 ---
@@ -100,7 +99,7 @@ Nous avons choisi d'implémenter une **architecture CQRS (Command Query Responsi
 
 ---
 
-## 4. Outils et Dépendances
+## 4. Architecture Implémentée
 
 ### 4.1 Stack technologique
 
@@ -163,11 +162,7 @@ Build & Tools:
 <com.tngtech.archunit:archunit>
 ```
 
----
-
-## 5. Implementación Architecture (Architecture Implémentée)
-
-### 5.1 Structure des packages
+### 4.3 Structure des packages
 
 ```
 src/main/java/Architecture_log/TP/
@@ -207,7 +202,7 @@ src/test/java/...
 
 | Pattern | Location | Purpose |
 |---------|----------|---------|
-| **CQRS** | Command/Query Services | Séparation Lecture/Écriture |
+| **4.4S** | Command/Query Services | Séparation Lecture/Écriture |
 | **DDD** | Entities/Commands | Domain-Driven Design |
 | **Repository** | entities/RecetteRepository | Data Access Layer |
 | **Publisher/Subscriber** | events/ | Event-driven communication |
@@ -216,9 +211,9 @@ src/test/java/...
 
 ---
 
-## 6. Test Strategy (Stratégie de Test)
+## 5. Test Strategy (Stratégie de Test)
 
-### 6.1 Niveaux de test
+### 5.1 Niveaux de test
 
 ```
 Unit Tests (80%)
@@ -239,17 +234,17 @@ BDD/Acceptance Tests (5%)
     └── cqrs.feature                 ✓ Comportement CQRS
 ```
 
-### 6.2 Couverture de test
+### 5.2 Couverture de test
 
 - **Cible:** ≥ 85% de couverture
-- **Kritère:** Commands et Services prioritaires
+- **Critère:** Commands et Services prioritaires
 - **Outils:** JaCoCo pour la mesure
 
 ---
 
-## 7. Monitoring & Observability
+## 6. Monitoring & Observability
 
-### 7.1 Points de monitoring
+### 6.1 Points de monitoring
 
 ```
 1. Command Publishing
@@ -268,7 +263,7 @@ BDD/Acceptance Tests (5%)
    - N+1 queries
 ```
 
-### 7.2 Logging
+### 6.2 Logging
 
 ```java
 - INFO: Exécution des commandes réussies
@@ -279,7 +274,7 @@ BDD/Acceptance Tests (5%)
 
 ---
 
-## 8. Migration Path (Chemin d'évolution)
+## 7. Migration Path (Chemin d'évolution)
 
 ### Phase 1 (Actuelle)
 - ✅ CQRS basique avec même base de données
@@ -299,7 +294,7 @@ BDD/Acceptance Tests (5%)
 
 ---
 
-## 9. Consequences (Conséquences)
+## 8. Consequences (Conséquences)
 
 ### Positives
 ✅ Scalabilité indépendante  
@@ -314,15 +309,14 @@ BDD/Acceptance Tests (5%)
 
 ---
 
-## 10. Related ADRs
+## 9. Related ADRs
 
 - **ADR-002:** Choix de Kafka pour le message bus
 - **ADR-003:** Stratégie de résilience avec Resilience4J
-- **ADR-004:** Testing Strategy avec Cucumber
 
 ---
 
-## 11. References
+## 10. References
 
 - [CQRS Pattern - Martin Fowler](https://martinfowler.com/bliki/CQRS.html)
 - [Spring CQRS Guide](https://spring.io/guides)
@@ -331,5 +325,5 @@ BDD/Acceptance Tests (5%)
 
 ---
 
-**Approved by:** [À compléter]  
+**Approved by:** Achraf EL ALLALI, WIAM ABDELLAOUI 
 **Last reviewed:** Janvier 2025
