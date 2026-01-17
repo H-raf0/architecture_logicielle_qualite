@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 # Format files with Prettier
 npx prettier --write ./src/
 # Re-stage any changes made by Prettier so they are included in the commit
