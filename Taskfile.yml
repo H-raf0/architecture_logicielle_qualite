@@ -1,124 +1,82 @@
 version: '3'
 
-# Taskfile pour automatiser les commandes du projet
+# Taskfile - Commandes essentielles
 # Installation: https://taskfile.dev/installation/
 # Usage: task <nom-de-la-tache>
 
 tasks:
-#Build 
-  
+
+  # BUILD
   build:
     desc: "Compiler le projet"
     cmds:
       - mvn clean compile
 
   test:
-    desc: "Lancer tous les tests"
+    desc: "Lancer les tests"
     cmds:
       - mvn test
-
-  test:archunit:
-    desc: "Lancer uniquement les tests ArchUnit"
-    cmds:
-      - mvn test -Dtest=ArchitectureTest
-
-  test:commands:
-    desc: "Lancer les tests des Command Services"
-    cmds:
-      - mvn test -Dtest=*CommandServiceTest
-
-  test:queries:
-    desc: "Lancer les tests des Query Services"
-    cmds:
-      - mvn test -Dtest=*QueryServiceTest
-
-  test:integration:
-    desc: "Lancer les tests d'intégration"
-    cmds:
-      - mvn test -Dtest=*IntegrationTest
-
-  test:entity:
-    desc: "Lancer les tests des entités"
-    cmds:
-      - mvn test -Dtest=*EntityTest
-
-  test:repository:
-    desc: "Lancer les tests des repositories"
-    cmds:
-      - mvn test -Dtest=*RepositoryTest
 
   package:
     desc: "Créer le JAR"
     cmds:
       - mvn clean package
 
-  install:
-    desc: "Installer les dépendances Maven"
+  # DOCKER
+  up:
+    desc: "Démarrer Docker (app + Kafka)"
     cmds:
-      - mvn clean install
+      - docker-compose up -d
+      - echo "⏳ Attente du démarrage..."
+      - for /L %i in (1,1,30) do @(curl -s http://localhost:8080/actuator/health >nul 2>&1 && (echo "✓ Prêt sur http://localhost:8080" && exit /b 0) || (echo "Tentative %i/30..." && timeout /t 2 >nul))
+      - echo "✗ Timeout"
 
-  run:
-    desc: "Démarrer l'application Spring Boot"
-    dir: "{{.USER_WORKING_DIR}}"
+  down:
+    desc: "Arrêter Docker"
     cmds:
-      - cmd /c mvn spring-boot:run
+      - docker-compose down
 
-  run:dev:
-    desc: "Démarrer l'application en mode développement"
+  logs:
+    desc: "Voir les logs"
     cmds:
-      - mvn spring-boot:run -Dspring-boot.run.profiles=dev
+      - docker-compose logs -f app
 
-  # Quality & Validation
-
-  quality:
-    desc: "Vérifier la qualité du code (Prettier)"
+  health:
+    desc: "Vérifier la santé"
     cmds:
-      - npm run format:java -- --check
+      - docker-compose ps
+      - echo ""
+      - curl -s http://localhost:8080/actuator/health | jq . || echo "Non disponible"
 
-  format:
-    desc: "Formater le code avec Prettier"
+  # API
+  api:
+    desc: "Ouvrir API (api/recettes.http)"
     cmds:
-      - npm run format:java
+      - code api/recettes.http || echo "Ouvrez: api/recettes.http"
 
-  verify:
-    desc: "Vérifier le projet (compile + test + quality)"
+  # QUICK WORKFLOWS
+  start:
+    desc: "Démarrer: build + docker up"
     cmds:
-      - mvn verify
-      - npm run format:java -- --check
+      - task build
+      - task up
 
-  # Clean
-  
+  stop:
+    desc: "Arrêter: docker down + clean"
+    cmds:
+      - task down
+      - mvn clean
+
   clean:
-    desc: "Nettoyer le projet (supprimer target/)"
+    desc: "Nettoyer (target/)"
     cmds:
       - mvn clean
 
-  # Git Operations
-  
-  git:status:
-    desc: "Voir l'état Git"
+  default:
     cmds:
-      - git status
+      - task --list
+    silent: true
 
-  git:log:
-    desc: "Voir l'historique Git"
-    cmds:
-      - git log --oneline --graph --all -10
-
-  git:branches:
-    desc: "Lister toutes les branches"
-    cmds:
-      - git branch -a
-
-  git:pull:
-    desc: "Récupérer les changements du remote"
-    cmds:
-      - git pull
-
-  git:push:
-    desc: "Pousser les changements vers le remote"
-    cmds:
-      - git push
 
   # API Testing (CQRS) 
   api:recettes:list:
