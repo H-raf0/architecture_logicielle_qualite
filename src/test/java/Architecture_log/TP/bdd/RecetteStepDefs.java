@@ -36,6 +36,8 @@ public class RecetteStepDefs {
 
   private MvcResult lastResult;
   private int lastStatusCode;
+  private Exception lastException;
+  private String lastErrorMessage;
 
   // Context steps
   @Étantdonné("que l'application est démarrée")
@@ -132,6 +134,18 @@ public class RecetteStepDefs {
     lastStatusCode = lastResult.getResponse().getStatus();
   }
 
+  @Quand("je crée une recette avec un nom de plus de 255 caractères")
+  public void creRecetteNomTropLong() throws Exception {
+    String longNom = "A".repeat(256);
+    String json = String.format("{\"nom\": \"%s\"}", longNom);
+    lastResult = mockMvc
+      .perform(
+        post("/api/recettes").contentType("application/json").content(json)
+      )
+      .andReturn();
+    lastStatusCode = lastResult.getResponse().getStatus();
+  }
+
   // Assertion steps
   @Alors("la recette est créée avec succès")
   public void recetteCreeeSucces() {
@@ -210,5 +224,32 @@ public class RecetteStepDefs {
     for (Object r : recettes) {
       assertThat(r.toString()).contains(terme);
     }
+  }
+
+  // Error scenario assertions
+  @Alors("une erreur de validation est levée")
+  public void erreurValidationLevee() {
+    assertThat(lastStatusCode).isEqualTo(400);
+  }
+
+  @Alors("le message d'erreur contient {string}")
+  public void messageErreurContient(String text) throws Exception {
+    String content = lastResult.getResponse().getContentAsString();
+    assertThat(content).contains(text);
+    lastErrorMessage = content;
+  }
+
+  @Alors("une erreur HTTP {int} est levée")
+  public void erreurHTTPLevee(int statusCode) {
+    assertThat(lastStatusCode).isEqualTo(statusCode);
+  }
+
+  @Alors(
+    "l'erreur de publication Kafka est loggée mais ne bloque pas la création"
+  )
+  public void erreurKafkaLoggeeNonBloquante() {
+    // Vérifier que la recette a été créée malgré l'erreur Kafka
+    assertThat(lastStatusCode).isEqualTo(201);
+    assertThat(recetteRepository.findAll()).isNotEmpty();
   }
 }

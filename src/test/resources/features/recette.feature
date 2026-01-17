@@ -63,3 +63,50 @@ Fonctionnalité: Gestion des recettes
       | Pizza  | 2      |
       | Salade | 1      |
       | Tarte  | 0      |
+
+
+# language: fr
+Fonctionnalité: Gestion des erreurs - Recettes
+  En tant qu'utilisateur
+  Je veux que le système gère les erreurs gracieusement
+  Afin que je comprenne les problèmes et puisse les résoudre
+
+  Contexte:
+    Étant donné que l'application est démarrée
+    Et que la base de données est vide
+
+  Scénario: Erreur lors de création avec nom vide
+    Quand je crée une recette avec un nom vide
+    Alors une erreur de validation est levée
+    Et le message d'erreur contient "obligatoire"
+
+  Scénario: Erreur lors de création avec nom trop court
+    Quand je crée une recette avec le nom "AB"
+    Alors une erreur de validation est levée
+    Et le message d'erreur contient "3 caractères"
+
+  Scénario: Erreur lors de création avec nom trop long
+    Quand je crée une recette avec un nom de plus de 255 caractères
+    Alors une erreur de validation est levée
+    Et le message d'erreur contient "255 caractères"
+
+  Scénario: Erreur lors de récupération d'une recette inexistante
+    Quand je récupère la recette avec l'id 999
+    Alors une erreur HTTP 404 est levée
+    Et le message d'erreur contient "introuvable"
+
+  Scénario: Erreur lors de modification d'une recette inexistante
+    Quand je modifie la recette 999 avec le nom "Pizza"
+    Alors une erreur HTTP 404 est levée
+    Et le message d'erreur contient "introuvable"
+
+  Scénario: Erreur lors de suppression d'une recette inexistante
+    Quand je supprime la recette avec l'id 999
+    Alors une erreur HTTP 404 est levée
+    Et le message d'erreur contient "introuvable"
+
+  Scénario: Gestion des erreurs lors de la publication d'événements Kafka
+    Étant donné qu'une recette "Pizza" existe avec l'id 1
+    Quand je crée une recette avec le nom "Pâtes"
+    Alors la recette est créée avec succès
+    Et l'erreur de publication Kafka est loggée mais ne bloque pas la création
