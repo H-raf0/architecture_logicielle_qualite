@@ -1,0 +1,423 @@
+{
+  "info": {
+    "_postman_id": "recettes-api-collection",
+    "name": "API Gestion des Recettes - CQRS",
+    "description": "Collection complète pour tester l'API REST de gestion des recettes avec architecture CQRS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Recettes",
+      "item": [
+        {
+          "name": "Lister toutes les recettes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Récupérer une recette par ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Créer une nouvelle recette",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizza Margherita\",\n  \"description\": \"Pizza classique avec tomate, mozzarella et basilic\",\n  \"tempsPreparation\": 30,\n  \"tempsCuisson\": 15\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recettes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mettre à jour une recette",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizza Napolitaine\",\n  \"description\": \"Pizza traditionnelle napolitaine\",\n  \"tempsPreparation\": 30,\n  \"tempsCuisson\": 20\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Supprimer une recette",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ingrédients",
+      "item": [
+        {
+          "name": "Récupérer tous les ingrédients d'une recette",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1/ingredients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1",
+                "ingredients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Récupérer un ingrédient spécifique",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1/ingredients/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1",
+                "ingredients",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ajouter un ingrédient",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Tomate\",\n  \"quantite\": \"500g\",\n  \"prix\": 2.50,\n  \"unite\": \"g\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1/ingredients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1",
+                "ingredients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mettre à jour un ingrédient",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Tomate bio\",\n  \"quantite\": \"600g\",\n  \"prix\": 3.50,\n  \"unite\": \"g\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1/ingredients/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1",
+                "ingredients",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Supprimer un ingrédient",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes/1/ingredients/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes",
+                "1",
+                "ingredients",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recherche & Pagination",
+      "item": [
+        {
+          "name": "Rechercher des recettes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes?nom=Pizza",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes"
+              ],
+              "query": [
+                {
+                  "key": "nom",
+                  "value": "Pizza"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pagination - Page 1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trier par nom (ascendant)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recettes?sort=nom,asc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recettes"
+              ],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "nom,asc"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Santé & Status",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "actuator",
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Metrics - Resilience",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/metrics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "actuator",
+                "metrics"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}

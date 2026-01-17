@@ -1,0 +1,105 @@
+### Configuration API - Recettes
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### 1. Lister toutes les recettes (Query)
+GET {{baseUrl}}/recettes
+Accept: {{contentType}}
+
+### 2. Récupérer une recette par ID (Query)
+GET {{baseUrl}}/recettes/1
+Accept: {{contentType}}
+
+### 3. Créer une nouvelle recette (Command)
+POST {{baseUrl}}/recettes
+Content-Type: {{contentType}}
+
+{
+  "nom": "Pizza Margherita",
+  "description": "Pizza classique avec tomate, mozzarella et basilic",
+  "tempsPreparation": 30,
+  "tempsCuisson": 15
+}
+
+### 4. Créer une recette complexe avec ingrédients
+POST {{baseUrl}}/recettes
+Content-Type: {{contentType}}
+
+{
+  "nom": "Salade César",
+  "description": "Salade fraîche avec croutons et parmesan",
+  "tempsPreparation": 15,
+  "tempsCuisson": 0
+}
+
+### 5. Mettre à jour une recette (Command)
+PUT {{baseUrl}}/recettes/1
+Content-Type: {{contentType}}
+
+{
+  "nom": "Pizza Napolitaine",
+  "description": "Pizza traditionnelle napolitaine",
+  "tempsPreparation": 30,
+  "tempsCuisson": 20
+}
+
+### 6. Supprimer une recette (Command)
+DELETE {{baseUrl}}/recettes/1
+Accept: {{contentType}}
+
+### 7. Récupérer tous les ingrédients d'une recette (Query)
+GET {{baseUrl}}/recettes/1/ingredients
+Accept: {{contentType}}
+
+### 8. Récupérer un ingrédient spécifique (Query)
+GET {{baseUrl}}/recettes/1/ingredients/1
+Accept: {{contentType}}
+
+### 9. Ajouter un ingrédient à une recette (Command)
+POST {{baseUrl}}/recettes/1/ingredients
+Content-Type: {{contentType}}
+
+{
+  "nom": "Tomate",
+  "quantite": "500g",
+  "prix": 2.50,
+  "unite": "g"
+}
+
+### 10. Ajouter plusieurs ingrédients
+POST {{baseUrl}}/recettes/1/ingredients
+Content-Type: {{contentType}}
+
+{
+  "nom": "Mozzarella",
+  "quantite": "250g",
+  "prix": 4.50,
+  "unite": "g"
+}
+
+### 11. Mettre à jour un ingrédient (Command)
+PUT {{baseUrl}}/recettes/1/ingredients/1
+Content-Type: {{contentType}}
+
+{
+  "nom": "Tomate bio",
+  "quantite": "600g",
+  "prix": 3.50,
+  "unite": "g"
+}
+
+### 12. Supprimer un ingrédient (Command)
+DELETE {{baseUrl}}/recettes/1/ingredients/1
+Accept: {{contentType}}
+
+### 13. Rechercher des recettes par critère
+GET {{baseUrl}}/recettes?nom=Pizza
+Accept: {{contentType}}
+
+### 14. Récupérer les recettes avec pagination
+GET {{baseUrl}}/recettes?page=0&size=10
+Accept: {{contentType}}
+
+### 15. Récupérer les recettes triées
+GET {{baseUrl}}/recettes?sort=nom,asc
+Accept: {{contentType}}

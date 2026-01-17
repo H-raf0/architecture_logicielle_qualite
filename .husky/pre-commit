@@ -1,1 +1,2 @@
+# Format files with Prettier
 npx prettier --write ./src/
