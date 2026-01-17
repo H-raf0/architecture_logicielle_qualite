@@ -2,10 +2,10 @@ package Architecture_log.TP.queries.dto;
 
 /**
  * DTO pour la restitution d'un ingrédient.
- * 
+ *
  * Transfer Object utilisé dans les réponses GET.
  * Contient les données à exposer au client pour un ingrédient.
- * 
+ *
  * @see RecetteDTO pour les recettes
  */
 public class IngredientDTO {
@@ -32,7 +32,7 @@ public class IngredientDTO {
 
   /**
    * Constructeur avec id, nom et recetteId.
-   * 
+   *
    * @param id ID de l'ingrédient
    * @param nom Nom de l'ingrédient
    * @param recetteId ID de la recette propriétaire
@@ -45,7 +45,7 @@ public class IngredientDTO {
 
   /**
    * Récupère l'ID de l'ingrédient.
-   * 
+   *
    * @return ID unique
    */
   public Long getId() {
@@ -54,7 +54,7 @@ public class IngredientDTO {
 
   /**
    * Définit l'ID de l'ingrédient.
-   * 
+   *
    * @param id Nouvel ID
    */
   public void setId(Long id) {
@@ -63,7 +63,7 @@ public class IngredientDTO {
 
   /**
    * Récupère le nom de l'ingrédient.
-   * 
+   *
    * @return Nom de l'ingrédient
    */
   public String getNom() {
@@ -72,7 +72,7 @@ public class IngredientDTO {
 
   /**
    * Définit le nom de l'ingrédient.
-   * 
+   *
    * @param nom Nouveau nom
    */
   public void setNom(String nom) {
@@ -81,7 +81,7 @@ public class IngredientDTO {
 
   /**
    * Récupère l'ID de la recette propriétaire.
-   * 
+   *
    * @return ID de la recette
    */
   public Long getRecetteId() {
@@ -90,7 +90,7 @@ public class IngredientDTO {
 
   /**
    * Définit l'ID de la recette propriétaire.
-   * 
+   *
    * @param recetteId ID de la recette
    */
   public void setRecetteId(Long recetteId) {

@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * REST Controller pour les opérations de modification d'ingrédients (CQRS Command).
- * 
+ *
  * Gère les requêtes:
  * - POST /recettes/{idRecette}/ingredients : Ajouter un ingrédient
  * - PUT /recettes/{idRecette}/ingredients/{idIngredient} : Modifier un ingrédient
  * - DELETE /recettes/{idRecette}/ingredients/{idIngredient} : Supprimer un ingrédient
- * 
+ *
  * @see IngredientCommandService pour la logique métier
  */
 @RestController
@@ -24,7 +24,7 @@ public class IngredientCommandController {
 
   /**
    * Constructeur du contrôleur.
-   * 
+   *
    * @param ingredientCommandService Service pour les opérations d'écriture
    */
   public IngredientCommandController(
@@ -35,7 +35,7 @@ public class IngredientCommandController {
 
   /**
    * Ajoute un nouvel ingrédient à une recette.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param dto Données du nouvel ingrédient
    * @return L'ingrédient créé avec son ID
@@ -50,7 +50,7 @@ public class IngredientCommandController {
 
   /**
    * Met à jour un ingrédient existant.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param idIngredient ID de l'ingrédient à modifier
    * @param dto Nouvelles données de l'ingrédient
@@ -71,7 +71,7 @@ public class IngredientCommandController {
 
   /**
    * Supprime un ingrédient d'une recette.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param idIngredient ID de l'ingrédient à supprimer
    */

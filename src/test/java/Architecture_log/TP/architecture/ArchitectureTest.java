@@ -9,7 +9,7 @@ import com.tngtech.archunit.lang.ArchRule;
 
 /**
  * Tests de respect des règles d'architecture du projet.
- * 
+ *
  * Valide que:
  * - Les CommandControllers sont dans le package commands.api
  * - Les QueryControllers sont dans le package queries.api
@@ -17,9 +17,9 @@ import com.tngtech.archunit.lang.ArchRule;
  * - Les QueryServices sont dans le package queries.service
  * - Les Repositories sont dans le package common.repository
  * - Les dépendances entre couches respectent le pattern CQRS
- * 
+ *
  * Erreur: Si une classe ne respecte pas sa règle, le test échoue.
- * 
+ *
  * @see https://www.archunit.org/
  * @see <a href="https://en.wikipedia.org/wiki/Command_and_query_responsibility_segregation">CQRS pattern</a>
  */
@@ -93,7 +93,7 @@ class ArchitectureTest {
 
   /**
    * Règle: CommandControllers ne dépendent que des CommandServices, DTOs et Entities
-   * 
+   *
    * Garantit le respect de la séparation des couches dans le pattern CQRS.
    */
   @ArchTest
@@ -121,7 +121,7 @@ class ArchitectureTest {
 
   /**
    * Règle: QueryControllers ne dépendent que des QueryServices et DTOs
-   * 
+   *
    * Garantit que les lectures ne passent que par la couche query.
    */
   @ArchTest
@@ -144,7 +144,7 @@ class ArchitectureTest {
 
   /**
    * Règle: Les Repositories ne sont accessibles que par les Services
-   * 
+   *
    * Garantit que seuls les services peuvent accéder à la persistence.
    */
   @ArchTest

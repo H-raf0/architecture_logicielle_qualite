@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * REST Controller pour les opérations de lecture d'ingrédients (CQRS Query).
- * 
+ *
  * Gère les requêtes:
  * - GET /recettes/{idRecette}/ingredients : Récupérer tous les ingrédients d'une recette
- * 
+ *
  * @see IngredientQueryService pour la logique métier
  */
 @RestController
@@ -21,7 +21,7 @@ public class IngredientQueryController {
 
   /**
    * Constructeur du contrôleur.
-   * 
+   *
    * @param ingredientQueryService Service pour les opérations de lecture
    */
   public IngredientQueryController(
@@ -32,7 +32,7 @@ public class IngredientQueryController {
 
   /**
    * Récupère tous les ingrédients d'une recette.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @return Liste des ingrédients associés à la recette
    */

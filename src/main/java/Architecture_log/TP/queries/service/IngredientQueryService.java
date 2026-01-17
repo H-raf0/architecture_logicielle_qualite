@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service pour gérer les requêtes de lecture des ingrédients.
- * 
+ *
  * Implémente le pattern CQRS pour les opérations d'ingrédients.
  * Ce service assure l'accès en lecture aux ingrédients filtrés par recette.
  * Les modifications sont gérées par IngredientCommandService.
@@ -21,7 +21,7 @@ public class IngredientQueryService {
 
   /**
    * Constructeur du service de requêtes d'ingrédients.
-   * 
+   *
    * @param ingredientRepository Repository pour accéder aux ingrédients en BD
    */
   public IngredientQueryService(IngredientRepository ingredientRepository) {
@@ -30,7 +30,7 @@ public class IngredientQueryService {
 
   /**
    * Récupère tous les ingrédients d'une recette.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @return Liste de tous les ingrédients associés à la recette (DTO)
    */
@@ -44,7 +44,7 @@ public class IngredientQueryService {
 
   /**
    * Convertit une entité Ingredient en DTO.
-   * 
+   *
    * @param ingredient L'entité Ingredient à convertir
    * @return Le DTO correspondant
    */

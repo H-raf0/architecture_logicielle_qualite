@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service pour gérer les commandes de création/modification/suppression d'ingrédients.
- * 
+ *
  * Implémente le pattern CQRS pour les opérations d'ingrédients.
  * Assure que les ingrédients appartiennent à la recette spécifiée.
  */
@@ -22,7 +22,7 @@ public class IngredientCommandService {
 
   /**
    * Constructeur du service d'ingrédients.
-   * 
+   *
    * @param ingredientRepository Repository pour accéder aux ingrédients
    * @param recetteRepository Repository pour accéder aux recettes
    */
@@ -36,7 +36,7 @@ public class IngredientCommandService {
 
   /**
    * Ajoute un nouvel ingrédient à une recette.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param dto Les données du nouvel ingrédient
    * @return L'ingrédient créé avec son ID
@@ -56,10 +56,10 @@ public class IngredientCommandService {
 
   /**
    * Met à jour un ingrédient existant.
-   * 
+   *
    * Vérifie que l'ingrédient appartient bien à la recette spécifiée
    * avant de procéder à la mise à jour.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param idIngredient ID de l'ingrédient à modifier
    * @param dto Les nouvelles données de l'ingrédient
@@ -86,9 +86,9 @@ public class IngredientCommandService {
 
   /**
    * Supprime un ingrédient d'une recette.
-   * 
+   *
    * Valide que l'ingrédient appartient bien à la recette avant suppression.
-   * 
+   *
    * @param idRecette ID de la recette propriétaire
    * @param idIngredient ID de l'ingrédient à supprimer
    * @throws RuntimeException Si l'ingrédient n'existe pas,

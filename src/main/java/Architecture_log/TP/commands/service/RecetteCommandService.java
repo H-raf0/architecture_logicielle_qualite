@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service pour gérer les commandes de création/modification de recettes.
- * 
+ *
  * Implémente le pattern CQRS (Command Query Responsibility Segregation).
  * Les modifications passent par ce service avec retry automatique.
  */
@@ -20,9 +20,10 @@ public class RecetteCommandService {
 
   private final RecetteRepository recetteRepository;
   private final RecetteEventPublisher recetteEventPublisher;
+
   /**
    * Constructeur du service de commandes de recettes.
-   * 
+   *
    * @param recetteRepository Repository pour accéder aux recettes
    * @param recetteEventPublisher Publisher pour publier les événements
    */
@@ -36,12 +37,12 @@ public class RecetteCommandService {
 
   /**
    * Crée une nouvelle recette avec retry automatique en cas d'erreur.
-   * 
+   *
    * Si la première tentative échoue (ex: BD indisponible), le système
    * réessaye jusqu'à 3 fois avec une attente de 1 seconde entre les tentatives.
-   * 
+   *
    * Après la création, un événement "recette-created" est publié sur Kafka.
-   * 
+   *
    * @param dto Les données de la recette à créer
    * @return La recette créée avec son ID généré
    * @throws RuntimeException Si l'enregistrement échoue après 3 tentatives
@@ -63,7 +64,7 @@ public class RecetteCommandService {
 
   /**
    * Met à jour une recette existante.
-   * 
+   *
    * @param id L'ID de la recette à modifier
    * @param dto Les nouvelles données de la recette
    * @return La recette mise à jour
@@ -79,7 +80,7 @@ public class RecetteCommandService {
 
   /**
    * Supprime une recette.
-   * 
+   *
    * @param id L'ID de la recette à supprimer
    */
   public void deleteRecette(Long id) {
