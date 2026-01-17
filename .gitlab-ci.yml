@@ -1,32 +1,51 @@
 stages:
   - build
   - test
-  #  - quality
+#  - quality
   - package
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
 
 build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - ./mvnw clean compile
+    - mvn clean compile
+  artifacts:
+    paths:
+      - target/classes/
+    expire_in: 1 day
 
 test:
   stage: test
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - ./mvnw test
+    - mvn test
+  dependencies:
+    - build
 
 #quality:
 #  stage: quality
 #  image: maven:3.9.6-eclipse-temurin-17
 #  script:
-#    - ./mvnw qulice:check
+#    - mvn qulice:check
+#  dependencies:
+#    - build
+#  allow_failure: true
 
 package:
   stage: package
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - ./mvnw package -DskipTests
+    - mvn package -DskipTests
+  dependencies:
+    - build
   artifacts:
     paths:
       - target/*.jar
+    expire_in: 30 days
