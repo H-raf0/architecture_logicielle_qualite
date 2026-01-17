@@ -26,7 +26,12 @@ import org.springframework.test.context.TestPropertySource;
  *
  * Note: Ce test nécessite que Kafka soit démarré pour fonctionner complètement.
  * Désactivé par défaut car il nécessite un broker Kafka en cours d'exécution.
- * Pour l'activer, démarrez Kafka et supprimez l'annotation @Disabled.
+ *
+ * Pour activer et exécuter ces tests:
+ * 1. Démarrez Kafka: docker-compose up -d kafka
+ * 2. Attendez quelques secondes que Kafka soit prêt
+ * 3. Supprimez l'annotation @Disabled ci-dessous
+ * 4. Exécutez: mvn test
  *
  * Scénarios testés:
  * - Création d'une recette
@@ -45,9 +50,10 @@ import org.springframework.test.context.TestPropertySource;
     "resilience4j.retry.instances.recetteRetry.waitDuration=1000",
   }
 )
+/*
 @Disabled(
-  "Nécessite un broker Kafka en cours d'exécution. Activez-le en démarrant Kafka localement."
-)
+  "Kafka test - Requires manual Kafka startup: docker-compose up -d kafka"
+)*/
 class RecetteIntegrationTest {
 
   @Autowired
@@ -112,13 +118,10 @@ class RecetteIntegrationTest {
   @Test
   @DisplayName("Devrait rejeter une recette avec nom vide")
   void shouldRejectEmptyName() {
-    // Given
-    CreateRecetteDTO dto = new CreateRecetteDTO("");
-
     // When & Then
     assertThrows(
       IllegalArgumentException.class,
-      () -> recetteCommandService.createRecette(dto),
+      () -> new CreateRecetteDTO(""),
       "Une exception doit être levée pour un nom vide"
     );
   }
@@ -126,13 +129,10 @@ class RecetteIntegrationTest {
   @Test
   @DisplayName("Devrait rejeter une recette avec nom null")
   void shouldRejectNullName() {
-    // Given
-    CreateRecetteDTO dto = new CreateRecetteDTO(null);
-
     // When & Then
     assertThrows(
-      Exception.class,
-      () -> recetteCommandService.createRecette(dto),
+      IllegalArgumentException.class,
+      () -> new CreateRecetteDTO(null),
       "Une exception doit être levée pour un nom null"
     );
   }
@@ -140,13 +140,10 @@ class RecetteIntegrationTest {
   @Test
   @DisplayName("Devrait rejeter une recette avec nom trop court")
   void shouldRejectShortName() {
-    // Given
-    CreateRecetteDTO dto = new CreateRecetteDTO("AB");
-
     // When & Then
     assertThrows(
       IllegalArgumentException.class,
-      () -> recetteCommandService.createRecette(dto),
+      () -> new CreateRecetteDTO("AB"),
       "Une exception doit être levée pour un nom trop court"
     );
   }

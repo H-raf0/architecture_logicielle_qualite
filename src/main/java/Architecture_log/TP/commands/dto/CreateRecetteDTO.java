@@ -24,8 +24,24 @@ public class CreateRecetteDTO {
    * Constructeur avec nom.
    *
    * @param nom Nom de la recette
+   * @throws IllegalArgumentException Si le nom est null, vide ou trop court (< 3 caractères)
    */
   public CreateRecetteDTO(String nom) {
+    if (nom == null) {
+      throw new IllegalArgumentException(
+        "Nom de la recette ne peut pas être null"
+      );
+    }
+    if (nom.trim().isEmpty()) {
+      throw new IllegalArgumentException(
+        "Nom de la recette ne peut pas être vide"
+      );
+    }
+    if (nom.trim().length() < 3) {
+      throw new IllegalArgumentException(
+        "Nom de la recette doit contenir au moins 3 caractères"
+      );
+    }
     this.nom = nom;
   }
 
