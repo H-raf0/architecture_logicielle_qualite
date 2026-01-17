@@ -56,6 +56,21 @@ public class RecetteQueryService {
   }
 
   /**
+   * Recherche des recettes par terme dans le nom.
+   *
+   * @param terme Le terme de recherche
+   * @return Liste des recettes dont le nom contient le terme (DTO)
+   */
+  public List<RecetteDTO> searchRecettes(String terme) {
+    return recetteRepository
+      .findAll()
+      .stream()
+      .filter(r -> r.getNom().toLowerCase().contains(terme.toLowerCase()))
+      .map(this::toDTO)
+      .collect(Collectors.toList());
+  }
+
+  /**
    * Convertit une entité Recette en DTO.
    *
    * @param recette L'entité Recette à convertir

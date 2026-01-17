@@ -67,11 +67,14 @@
 		</dependency>
 
 		<!-- Spring AOP for Resilience4J annotations -->
-		<!-- dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-
-		</dependency -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
 		<!-- kafka -->
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>

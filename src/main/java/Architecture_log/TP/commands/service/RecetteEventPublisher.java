@@ -40,8 +40,9 @@ public class RecetteEventPublisher {
   /**
    * Publie un événement {@link RecetteCreatedEvent} sur le topic Kafka.
    *
-   * L'envoi est asynchrone : les erreurs éventuelles sont loggées et
-   * transmises via le futur retourné par Kafka.
+   * L'envoi est asynchrone et non-bloquant : les erreurs éventuelles sont loggées
+   * mais ne bloquent pas la création de la recette. Cela garantit que les défaillances
+   * Kafka n'impactent pas la transactionalité du service de commandes.
    *
    * @param event événement décrivant la recette créée
    */
@@ -59,19 +60,20 @@ public class RecetteEventPublisher {
           );
         } else {
           logger.error(
-            "Failed to publish recette created event: {}",
+            "Failed to publish recette created event: {} (Error: {})",
             event.getId(),
-            exception
+            exception.getMessage()
           );
         }
       });
     } catch (Exception e) {
       logger.error(
-        "Error publishing recette created event: {}",
+        "Error publishing recette created event: {} (Error: {})",
         event.getId(),
-        e
+        e.getMessage()
       );
-      throw e;
+      // Non-bloquant : on loggue l'erreur mais on ne la relance pas
+      // pour éviter que la défaillance Kafka bloque la création de la recette
     }
   }
 }

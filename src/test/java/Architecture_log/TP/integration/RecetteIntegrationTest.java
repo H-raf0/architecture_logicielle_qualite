@@ -6,6 +6,7 @@ import Architecture_log.TP.commands.dto.CreateRecetteDTO;
 import Architecture_log.TP.commands.service.RecetteCommandService;
 import Architecture_log.TP.common.entity.Recette;
 import Architecture_log.TP.common.repository.RecetteRepository;
+import Architecture_log.TP.queries.dto.RecetteDTO;
 import Architecture_log.TP.queries.service.RecetteQueryService;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.client.HttpClientErrorException;
+
+//import org.springframework.web.client.HttpClientErrorException;
 
 /**
  * Tests d'intégration complète pour les opérations CRUD sur les recettes.
@@ -160,24 +162,23 @@ class RecetteIntegrationTest {
     );
 
     // When
-    Optional<Recette> retrieved = recetteQueryService.getRecetteById(
-      created.getId()
-    );
+    RecetteDTO retrieved = recetteQueryService.getRecetteById(created.getId());
 
     // Then
-    assertTrue(retrieved.isPresent(), "La recette doit être trouvée");
-    assertEquals("Pâtes Carbonara", retrieved.get().getNom());
-    assertEquals(created.getId(), retrieved.get().getId());
+    assertNotNull(retrieved, "La recette doit être trouvée");
+    assertEquals("Pâtes Carbonara", retrieved.getNom());
+    assertEquals(created.getId(), retrieved.getId());
   }
 
   @Test
   @DisplayName("Devrait retourner vide pour une recette inexistante")
   void shouldReturnEmptyForNonExistent() {
-    // When
-    Optional<Recette> retrieved = recetteQueryService.getRecetteById(999L);
-
-    // Then
-    assertTrue(retrieved.isEmpty(), "Doit retourner vide");
+    // When & Then
+    assertThrows(
+      RuntimeException.class,
+      () -> recetteQueryService.getRecetteById(999L),
+      "Une exception doit être levée pour une recette inexistante"
+    );
   }
 
   @Test
@@ -189,7 +190,7 @@ class RecetteIntegrationTest {
     recetteCommandService.createRecette(new CreateRecetteDTO("Salade"));
 
     // When
-    List<Recette> result = recetteQueryService.getAllRecettes();
+    List<RecetteDTO> result = recetteQueryService.getAllRecettes();
 
     // Then
     assertEquals(3, result.size(), "Doit avoir 3 recettes");
@@ -199,7 +200,7 @@ class RecetteIntegrationTest {
   @DisplayName("Devrait lister vide quand aucune recette")
   void shouldListEmptyWhenNoRecettes() {
     // When
-    List<Recette> result = recetteQueryService.getAllRecettes();
+    List<RecetteDTO> result = recetteQueryService.getAllRecettes();
 
     // Then
     assertTrue(result.isEmpty(), "La liste doit être vide");
@@ -218,7 +219,7 @@ class RecetteIntegrationTest {
     recetteCommandService.createRecette(new CreateRecetteDTO("Salade César"));
 
     // When
-    List<Recette> results = recetteQueryService.searchRecettes("Pizza");
+    List<RecetteDTO> results = recetteQueryService.searchRecettes("Pizza");
 
     // Then
     assertEquals(
@@ -239,7 +240,7 @@ class RecetteIntegrationTest {
     recetteCommandService.createRecette(new CreateRecetteDTO("Pizza"));
 
     // When
-    List<Recette> results = recetteQueryService.searchRecettes("Burger");
+    List<RecetteDTO> results = recetteQueryService.searchRecettes("Burger");
 
     // Then
     assertTrue(results.isEmpty(), "Aucun résultat ne doit être trouvé");
@@ -382,14 +383,16 @@ class RecetteIntegrationTest {
     assertNotNull(created.getId());
 
     // RETRIEVE
-    Optional<Recette> retrieved = recetteQueryService.getRecetteById(
-      created.getId()
-    );
-    assertTrue(retrieved.isPresent());
+    RecetteDTO retrieved = recetteQueryService.getRecetteById(created.getId());
+    assertNotNull(retrieved);
 
     // UPDATE
-    retrieved.get().setNom("Pizza Napolitaine");
-    recetteRepository.save(retrieved.get());
+    Recette recetteToUpdate = recetteRepository
+      .findById(created.getId())
+      .orElse(null);
+    assertNotNull(recetteToUpdate);
+    recetteToUpdate.setNom("Pizza Napolitaine");
+    recetteRepository.save(recetteToUpdate);
 
     // VERIFY UPDATE
     Recette updated = recetteRepository.findById(created.getId()).orElse(null);
@@ -421,7 +424,7 @@ class RecetteIntegrationTest {
     recetteCommandService.createRecette(new CreateRecetteDTO("Salade César"));
 
     // When - Chercher les pizzas
-    List<Recette> pizzas = recetteQueryService.searchRecettes("Pizza");
+    List<RecetteDTO> pizzas = recetteQueryService.searchRecettes("Pizza");
 
     // Then - Vérifier
     assertEquals(2, pizzas.size());

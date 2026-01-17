@@ -36,8 +36,6 @@ public class RecetteStepDefs {
 
   private MvcResult lastResult;
   private int lastStatusCode;
-  private Exception lastException;
-  private String lastErrorMessage;
 
   // Context steps
   @Étantdonné("que l'application est démarrée")
@@ -236,7 +234,6 @@ public class RecetteStepDefs {
   public void messageErreurContient(String text) throws Exception {
     String content = lastResult.getResponse().getContentAsString();
     assertThat(content).contains(text);
-    lastErrorMessage = content;
   }
 
   @Alors("une erreur HTTP {int} est levée")

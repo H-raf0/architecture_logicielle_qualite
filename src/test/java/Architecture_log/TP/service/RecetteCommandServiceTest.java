@@ -85,15 +85,18 @@ class RecetteCommandServiceTest {
       new QueryTimeoutException("Database timeout")
     );
 
-    // When & Then - Note: Resilience4J retry nécessite un contexte Spring avec AOP
+    // When & Then
+    // Note: Resilience4J retry nécessite un contexte Spring avec AOP (@EnableAspectJAutoProxy).
     // Ce test unitaire simple ne peut pas tester le retry réellement car l'annotation @Retry
-    // ne fonctionne que dans un contexte Spring. Pour tester le retry, utilisez un test
-    // d'intégration avec @SpringBootTest. Ici, on teste juste que l'exception est bien levée
+    // ne fonctionne que dans un contexte Spring avec AOP activé.
+    // Pour tester le retry réellement, utilisez un test d'intégration avec @SpringBootTest.
+    // Ici, on teste juste que l'exception est bien levée en cas d'erreur persistante.
     assertThrows(QueryTimeoutException.class, () -> {
       recetteCommandService.createRecette(dto);
     });
 
     // Vérifier que le repository a été appelé au moins une fois
+    // Note: Dans un contexte Spring avec AOP, il serait appelé 3 fois (3 tentatives max)
     verify(recetteRepository, atLeast(1)).save(any(Recette.class));
   }
 
