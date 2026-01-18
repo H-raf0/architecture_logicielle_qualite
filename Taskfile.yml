@@ -17,6 +17,11 @@ tasks:
     cmds:
       - mvn test
 
+  cucumber:
+    desc: "Lancer les tests Cucumber BDD"
+    cmds:
+      - mvn test -Dtest=CucumberTestRunner
+
   package:
     desc: "Créer le JAR"
     cmds:
