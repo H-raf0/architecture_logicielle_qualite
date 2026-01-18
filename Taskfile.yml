@@ -13,7 +13,7 @@ tasks:
       - mvn clean compile
 
   test:
-    desc: "Lancer les tests"
+    desc: "Lancer tous les tests (unitaires, intégration, architecture, Cucumber)"
     cmds:
       - mvn test
 
@@ -21,6 +21,11 @@ tasks:
     desc: "Lancer les tests Cucumber BDD"
     cmds:
       - mvn test -Dtest=CucumberTestRunner
+
+  architecture:
+    desc: "Lancer les tests d'architecture"
+    cmds:
+      - mvn test -Dtest=ArchitectureTest
 
   package:
     desc: "Créer le JAR"
